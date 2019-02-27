@@ -7,17 +7,34 @@
 //
 
 #import "YRKViewController.h"
+#import <YRKDataAnalyzer/YRKDataAnalyzer.h>
 
 @interface YRKViewController ()
 
 @end
 
 @implementation YRKViewController
+- (IBAction)buton1:(UIButton *)sender {
+    [[YRKDataAnalyzer sharedInstance] track:@"test" withProperties:@{@"aa": @"bb"}];
+}
+
+- (IBAction)button100:(UIButton *)sender {
+    
+    for (int i = 0; i < 100; i++) {
+        [[YRKDataAnalyzer sharedInstance] track:@"test" withProperties:@{@"aa": @"bb"}];
+    }
+}
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    NSString *path = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject].absoluteString;
+    
+    NSLog(@"***sqlitePath:%@",path);
+
 }
 
 - (void)didReceiveMemoryWarning

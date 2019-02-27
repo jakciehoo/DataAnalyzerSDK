@@ -7,12 +7,22 @@
 //
 
 #import "YRKAppDelegate.h"
+#import <YRKDataAnalyzer/YRKDataAnalyzer.h>
 
 @implementation YRKAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    
+    //YRKDARemoteConfig *config = [[YRKDARemoteConfig alloc] initWithDict:nil];
+    
+    YRKDataAnalyzer *analyzer = [YRKDataAnalyzer sharedInstance];
+    [analyzer startAnalyzerWithAppId:@"1" debugMode:YRKDataAnalyzerDebugOff userBlock:^NSString * _Nonnull{
+        return @"user1";
+    }];
+    
     return YES;
 }
 

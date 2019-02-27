@@ -1,0 +1,60 @@
+PODS:
+  - Expecta (1.0.6)
+  - "Expecta+Snapshots (3.1.1)":
+    - Expecta (~> 1.0)
+    - FBSnapshotTestCase/Core (~> 2.0)
+    - Specta (~> 1.0)
+  - FBSnapshotTestCase (2.1.4):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
+  - FBSnapshotTestCase/Core (2.1.4)
+  - FBSnapshotTestCase/SwiftSupport (2.1.4):
+    - FBSnapshotTestCase/Core
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
+  - JQFMDB (1.1.6):
+    - FMDB
+  - OpenUDID (1.0.0)
+  - Specta (1.0.7)
+  - YRKDataAnalyzer (0.1.0):
+    - JQFMDB (= 1.1.6)
+    - OpenUDID (= 1.0.0)
+    - YYModel (= 1.0.4)
+  - YYModel (1.0.4)
+
+DEPENDENCIES:
+  - Expecta
+  - "Expecta+Snapshots"
+  - FBSnapshotTestCase
+  - Specta
+  - YRKDataAnalyzer (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Expecta
+    - "Expecta+Snapshots"
+    - FBSnapshotTestCase
+    - FMDB
+    - JQFMDB
+    - OpenUDID
+    - Specta
+    - YYModel
+
+EXTERNAL SOURCES:
+  YRKDataAnalyzer:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Expecta: 3b6bd90a64b9a1dcb0b70aa0e10a7f8f631667d5
+  "Expecta+Snapshots": dcff217eef506dabd6dfdc7864ea2da321fafbb8
+  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  JQFMDB: 39ab0d6d7c26fd30e51c4dd92edcb27506a34c3a
+  OpenUDID: e7cb6984c7304906ad20f3a36bf087b025896b6b
+  Specta: 3e1bd89c3517421982dc4d1c992503e48bd5fe66
+  YRKDataAnalyzer: 83c48008338f4284b5b95541737e9e90a54d1f43
+  YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
+
+PODFILE CHECKSUM: e47684ae7a9ba9d4ba09e26aa566e73149d26ef5
+
+COCOAPODS: 1.5.3

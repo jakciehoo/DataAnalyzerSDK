@@ -59,14 +59,14 @@
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		82FE868910CB4EB6C4393EF9 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		82FE868910CB4EB6C4393EF9 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8ABD6471647C9DD7780B0C3A /* Pods-YRKDataAnalyzer_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YRKDataAnalyzer_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-YRKDataAnalyzer_Tests/Pods-YRKDataAnalyzer_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		8AD39DF3055AE6A830B6B142 /* Pods-YRKDataAnalyzer_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YRKDataAnalyzer_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YRKDataAnalyzer_Tests/Pods-YRKDataAnalyzer_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		8B6CCCD54BEAC246C415F217 /* Pods_YRKDataAnalyzer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YRKDataAnalyzer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		91DF7742872F6F849FD3563D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		91DF7742872F6F849FD3563D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		A75C058E562C008FBBBA6D31 /* Pods_YRKDataAnalyzer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YRKDataAnalyzer_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F065D74381E7C8E215EBBE24 /* YRKDataAnalyzer.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = YRKDataAnalyzer.podspec; path = ../YRKDataAnalyzer.podspec; sourceTree = "<group>"; };
+		F065D74381E7C8E215EBBE24 /* YRKDataAnalyzer.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = YRKDataAnalyzer.podspec; path = ../YRKDataAnalyzer.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -304,13 +304,21 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-YRKDataAnalyzer_Example/Pods-YRKDataAnalyzer_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
+				"${BUILT_PRODUCTS_DIR}/JQFMDB/JQFMDB.framework",
+				"${BUILT_PRODUCTS_DIR}/OpenUDID/OpenUDID.framework",
 				"${BUILT_PRODUCTS_DIR}/YRKDataAnalyzer/YRKDataAnalyzer.framework",
+				"${BUILT_PRODUCTS_DIR}/YYModel/YYModel.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JQFMDB.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenUDID.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YRKDataAnalyzer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYModel.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

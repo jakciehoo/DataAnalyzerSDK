@@ -1,0 +1,6 @@
+framework module YRKDataAnalyzer {
+  umbrella header "YRKDataAnalyzer-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "YRKDataAnalyzer",
+  "version": "0.1.0",
+  "summary": "A short description of YRKDataAnalyzer.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/胡江华/YRKDataAnalyzer",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "胡江华": "hujianghua@yiruikecorp.com"
+  },
+  "source": {
+    "git": "https://github.com/胡江华/YRKDataAnalyzer.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "YRKDataAnalyzer/Classes/**/*",
+  "dependencies": {
+    "OpenUDID": [
+      "1.0.0"
+    ],
+    "JQFMDB": [
+      "1.1.6"
+    ],
+    "YYModel": [
+      "1.0.4"
+    ]
+  }
+}
