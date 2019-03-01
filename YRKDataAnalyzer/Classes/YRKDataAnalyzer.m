@@ -23,10 +23,15 @@
 #import "JSONUtil.h"
 #import "YRKEvent.h"
 
-
+#define DA_DEBUG 1
 #define VERSION @"1.0.0"
 #define DBNAME @"com.yiruikecorp.da.sqlite"
 #define TABLENAME @"da"
+
+#define TEST_SERVER @"http://test.xiaoban.ren/data/report/api"
+#define ONLINE_SERVER @"http://api.xiaoban.ren/data/report/api"
+
+
 
 //中国运营商 mcc 标识
 static NSString* const CARRIER_CHINA_MCC = @"460";
@@ -98,9 +103,6 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
         self.flushBeforeEnterBackground = YES; //是否进入后台时上传数据
         
         self.threshold = 5;
-#ifdef DEBUG
-        self.threshold = 2;//for test, 3
-#endif
         NSString *label = [NSString stringWithFormat:@"com.yiruikecorp.da.serialQueue.%p", self];
         self.serialQueue = dispatch_queue_create([label UTF8String], DISPATCH_QUEUE_SERIAL);
         //Sets the key/value data for the specified dispatch queue.
@@ -115,7 +117,7 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
 }
 
 - (void)startAnalyzerWithAppId:(NSString *)appId debugMode:(YRKDataAnalyzerDebugMode)debugMode userBlock:(NSString *(^)(void))userBlock {
-    
+
     if (![appId isKindOfClass:[NSString class]]) {
         NSAssert(![appId isKindOfClass:[NSString class]], @"AppId不能为空");
     }
@@ -126,6 +128,11 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
     
     self.appId = appId;
     self.debugMode = debugMode;
+    
+    [self enableLog];//开启日志
+    
+    DALog(@"%@",[NSString stringWithFormat:@"DA initialize time start:%@",@([NSDate date].timeIntervalSince1970)]);
+
     
     if (userBlock) {
         self.userBlock = userBlock;
@@ -140,18 +147,21 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
     if (![db jq_isExistTable:TABLENAME]) {
         [db jq_createTable:TABLENAME dicOrModel:[YRKEvent class]];
     }
+    
+    DALog(@"%@" ,[NSString stringWithFormat:@"DA initialize time end:%@", @([NSDate date].timeIntervalSince1970)]);
 }
 
 #pragma mark - 获取配置
 
 - (void)getRemoteConfig {
-    @try {
-        dispatch_async(self.serialQueue, ^{
+    
+    dispatch_async(self.serialQueue, ^{
+        DALog(@"getRemoteConfig runs on thread:%@", [NSThread currentThread]);
+        @try {
             NSString *configVersion;
             self.config = [[NSUserDefaults standardUserDefaults] objectForKey:@"YRKDASDKConfig"];
             if (self.config) {
                 configVersion = self.config[@"confVersion"];
-                self.sdkSwitch = [self.config[@"sdkSwitch"] boolValue];
             }
             
             NSString *networkTypeString = [self getNetWorkState];
@@ -180,12 +190,12 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
                     
                 }
             }];
-        });
-    } @catch (NSException *exception) {
-        
-    } @finally {
-        
-    }
+        } @catch (NSException *exception) {
+            
+        } @finally {
+            
+        }
+    });
 }
 
 #pragma mark - 埋点
@@ -193,6 +203,7 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
     
     if (!self.sdkSwitch) {
         DALog(@"%@",@"SDK开关关闭");
+        return;
     }
     
     if (![event isKindOfClass:[NSString class]]) {
@@ -208,6 +219,8 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
             eventObj.extendInfo = properties.yy_modelToJSONString;
         }
         
+        DALog(@"埋入一条数据%@",eventObj.yy_modelToJSONString);
+        
         [self.dataList addObject:eventObj];
         
         if (self.config) {
@@ -222,7 +235,7 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
             NSArray *errorIndexs = [self.db jq_insertTable:TABLENAME dicOrModelArray:dataList];
             
             if (errorIndexs.count) {
-                DALog(@"%@",errorIndexs);
+                DALog(@"埋入数据失败，失败的个数：%@",errorIndexs.count);
             } else {
                 [self.dataList removeAllObjects];
             }
@@ -240,6 +253,7 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
     
     if (!self.sdkSwitch) {
         DALog(@"%@",@"SDK开关关闭");
+        return;
     }
     
     if (!self.config) {
@@ -250,6 +264,9 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
     DADebug(@"starting flush timer.");
     dispatch_async(dispatch_get_main_queue(), ^{
         NSTimeInterval interval = [self.config[@"interval"] floatValue];
+        if (DA_DEBUG) {
+            interval = 5;
+        }
         self.timer = [NSTimer scheduledTimerWithTimeInterval:interval
                                                       target:self
                                                     selector:@selector(flushBackground)
@@ -277,28 +294,36 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
 - (void)flush {
     
     if (!self.sdkSwitch) {
-        DALog(@"%@",@"SDK开关关闭");
+        DALog(@"%@",@"DA SDK开关关闭");
     }
     
     if (_serverURL == nil || [_serverURL isEqualToString:@""]) {
         return;
     }
     if (!self.config) {
-        DADebug(@"配置获取失败，无法上传数据.");
+        DADebug(@"DA配置获取失败，无法上传数据.");
         return;
     }
+    
+    dispatch_semaphore_t flushSem = dispatch_semaphore_create(0);
     
     NSInteger recordsCount = [self.db jq_tableItemCount:TABLENAME];
     
-    if (recordsCount <= 0) {
-        DADebug(@"缓存中没有数据，无需上传.");
+
+    if (recordsCount <= 0 && self.dataList.count == 0) {
+        DADebug(@"DA缓存中没有数据，无需上传.");
+        self.enableAccelerate = NO;//启用加速
+
         return;
     }
+    
+    DALog(@"DA缓存数据个数%ld", recordsCount);
     
     NSInteger count = [self.config[@"uploadCount"] integerValue];
     
     if (recordsCount >= [self.config[@"maxMemCount"] integerValue]) {
         self.enableAccelerate = YES;//启用加速
+        DALog(@"DA启用加速模式%ld", self.enableAccelerate);
     }
     
     if (self.enableAccelerate) {
@@ -312,7 +337,8 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
     }
     
     NSArray *records = [self.db jq_lookupTable:TABLENAME dicOrModel:[YRKEvent class] whereFormat:[NSString stringWithFormat:@"ORDER BY pkid ASC LIMIT %ld",count]];
-    if (records.count < count) {
+    BOOL isAddMem = records.count < count;
+    if (isAddMem) {
         NSArray *dataList = [self.dataList copy];
         if (dataList.count) {
             NSMutableArray *newList = [dataList mutableCopy];
@@ -328,28 +354,47 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
     [commonParam addEntriesFromDictionary:[self commonParamDict]];
     [data setValue:commonParam forKey:@"commonInfo"];
     [data setValue:records forKey:@"eventInfoList"];
+    
+    if (self.debugMode == YRKDataAnalyzerDebugOnly) {
+        return;
+    }
 
     __weak typeof(self) weakSelf = self;
+    
     [YRKNetworkHelper postWithURL:self.serverURL records:data success:^(id  _Nonnull responseObject) {
         NSDictionary *response = responseObject;
         if([response[@"code"] integerValue] == 200) {
-            BOOL flag = [weakSelf.db jq_deleteTable:TABLENAME whereFormat:[NSString stringWithFormat:@"WHERE pkid in (SELECT pkid from da ORDER BY pkid ASC LIMIT %ld)", (long)count]];
-            if (flag) {
-                DALog(@"上报数据成功，并清理缓存数据");
-            }
+//            dispatch_async(weakSelf.serialQueue, ^{
+                if (isAddMem) {
+                    [weakSelf.dataList removeAllObjects];
+                }
+                BOOL flag = [weakSelf.db jq_deleteTable:TABLENAME whereFormat:[NSString stringWithFormat:@"WHERE pkid in (SELECT pkid from da ORDER BY pkid ASC LIMIT %ld)", (long)count]];
+                if (flag) {
+                    DALog(@"DA上报数据成功，并清理缓存数据");
+                }
+                dispatch_semaphore_signal(flushSem);
+
+//            });
+
         } else {
-            
+            dispatch_semaphore_signal(flushSem);
+
         }
-        
+
+
     } failure:^(NSError * _Nonnull error) {
-        
+        dispatch_semaphore_signal(flushSem);
+
     }];
+    
+    dispatch_semaphore_wait(flushSem, DISPATCH_TIME_FOREVER);
+
 }
 
-#pragma mark - 注册监听
+#pragma mark - 监听相关
 - (void)setUpListeners {
     if (!self.sdkSwitch) {
-        DALog(@"%@",@"SDK开关关闭");
+        DALog(@"%@",@"DA SDK开关关闭");
     }
     
     // 监听 App 启动或结束事件
@@ -384,20 +429,9 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
-    //获取远程配置
-    [self performSelector:@selector(getRemoteConfig) withObject:nil afterDelay:0 inModes:@[NSRunLoopCommonModes,NSDefaultRunLoopMode]];
     
-    //开启定时器
-    if (self.timer == nil || ![self.timer isValid]) {
-        [self startFlushTimer];
-    }
-    
-    if (!self.sdkSwitch) {//关闭SDK的情况下
-        //停止 SDK 的 flushtimer
-        [self stopFlushTimer];
-        //本地数据上报
-        [self flushBackground];
-    }
+        //获取远程配置
+        [self performSelector:@selector(getRemoteConfig) withObject:nil afterDelay:0 inModes:@[NSRunLoopCommonModes,NSDefaultRunLoopMode]];
 }
 
 - (void)applicationWillResignActive:(NSNotification *)notification {
@@ -661,7 +695,11 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
 
 - (NSString *)serverURL {
     if (!_serverURL) {
-        _serverURL = @"http://test.xiaoban.ren/data/report/api";
+        if (_debugMode == YRKDataAnalyzerDebugOff) {
+            _serverURL = ONLINE_SERVER;
+        } else {
+            _serverURL = TEST_SERVER;
+        }
     }
     return _serverURL;
 }
@@ -671,6 +709,31 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
         _dataList = [NSMutableArray array];
     }
     return _dataList;
+}
+
+- (void)enableLog {
+    BOOL printLog = NO;
+    if (self.debugMode != YRKDataAnalyzerDebugOff) {
+        printLog = YES;
+    }
+    [YRKLog enableLog:printLog];
+}
+
+- (void)setConfig:(NSDictionary *)config {
+    if (_config != config) {
+        _config = config;
+        _sdkSwitch = [self.config[@"sdkSwitch"] boolValue];
+        //开启定时器
+        if (_timer == nil || ![_timer isValid]) {
+            [self startFlushTimer];
+        }
+        if (!_sdkSwitch) {//关闭SDK的情况下
+            //停止 SDK 的 flushtimer
+            [self stopFlushTimer];
+            //本地数据上报
+            [self flushBackground];
+        }
+    }
 }
 
 

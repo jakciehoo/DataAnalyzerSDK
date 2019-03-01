@@ -24,7 +24,7 @@ DALogLevel(DALoggerLevelInfo,(fmt), ## __VA_ARGS__)
 #define DAError DALog
 #define DADebug DALog
 
-#endif/* defined(__SensorsAnalyticsSDK__SALogger__) */
+#endif/* defined(__SensorsAnalyticsSDK__DALogger__) */
 
 
 typedef NS_ENUM(NSUInteger,DALoggerLevel){

@@ -62,21 +62,20 @@ NSInteger const Interval = 3;
 //原生POST请求
 + (void)postWithURL:(NSString *)url records:(NSDictionary *)records success:(SuccessBlock)success failure:(FailureBlock)failure{
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
-    [request setHTTPMethod:@"POST"];
-    
-    NSString *jsonString;
-    //NSData *zippedData;
-    //NSString *b64String;
-
     @try {
+                
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+        [request setHTTPMethod:@"POST"];
+        
+        NSString *jsonString;
+        //NSData *zippedData;
+        //NSString *b64String;
         
         jsonString = records.yy_modelToJSONString;
         NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
         //zippedData = [YRKGzipUtil gzipData:[jsonString dataUsingEncoding:NSUTF8StringEncoding]];
         //b64String = [zippedData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithCarriageReturn];
         
-
         //设置请求体
         [request setHTTPBody:jsonData];
         //设置本次请求的数据请求格式
@@ -87,7 +86,7 @@ NSInteger const Interval = 3;
         request.timeoutInterval = Interval;
         
         NSURLSessionTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+            
                 if (error) {
                     if (failure) {
                         failure(error);
@@ -102,7 +101,7 @@ NSInteger const Interval = 3;
                         
                     }
                 }
-            });
+
         }];
         [task resume];
         

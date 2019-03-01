@@ -35,20 +35,50 @@
                                     <action selector="button100:" destination="whP-gf-Uak" eventType="touchUpInside" id="4cx-lt-1gW"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CPU使用率：" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecy-YE-Fmk">
+                                <rect key="frame" x="31" y="631.5" width="343" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6IY-VF-WhZ">
+                                <rect key="frame" x="11" y="89" width="114" height="30"/>
+                                <state key="normal" title="插入5000条数据"/>
+                                <connections>
+                                    <action selector="button50000:" destination="whP-gf-Uak" eventType="touchUpInside" id="Utt-0T-Rbs"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d0e-a6-8Rj">
+                                <rect key="frame" x="164" y="89" width="178" height="30"/>
+                                <state key="normal" title="测试高并发插入500000条"/>
+                                <connections>
+                                    <action selector="buttonConcurrent:" destination="whP-gf-Uak" eventType="touchUpInside" id="ikb-Jq-4RG"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Mvr-aV-6Um" firstAttribute="top" secondItem="ecy-YE-Fmk" secondAttribute="bottom" constant="15" id="7UD-tR-HXS"/>
+                            <constraint firstItem="d0e-a6-8Rj" firstAttribute="leading" secondItem="6IY-VF-WhZ" secondAttribute="trailing" constant="39" id="EdQ-6q-3Z4"/>
                             <constraint firstItem="bRS-pn-lAc" firstAttribute="leading" secondItem="EWF-RS-tR3" secondAttribute="trailing" constant="41" id="HHr-hE-zN9"/>
+                            <constraint firstItem="6IY-VF-WhZ" firstAttribute="top" secondItem="EWF-RS-tR3" secondAttribute="bottom" constant="14" id="P4q-W4-Zj9"/>
+                            <constraint firstItem="d0e-a6-8Rj" firstAttribute="baseline" secondItem="6IY-VF-WhZ" secondAttribute="baseline" id="RcA-TW-Ubb"/>
+                            <constraint firstItem="6IY-VF-WhZ" firstAttribute="leading" secondItem="EWF-RS-tR3" secondAttribute="leading" id="VFp-yb-hbV"/>
+                            <constraint firstItem="ecy-YE-Fmk" firstAttribute="leading" secondItem="TpU-gO-2f1" secondAttribute="leadingMargin" constant="15" id="We3-d2-0cW"/>
                             <constraint firstItem="bRS-pn-lAc" firstAttribute="centerX" secondItem="TpU-gO-2f1" secondAttribute="centerX" id="bZZ-5k-jHk"/>
                             <constraint firstItem="bRS-pn-lAc" firstAttribute="baseline" secondItem="EWF-RS-tR3" secondAttribute="baseline" id="bnX-DH-9tl"/>
                             <constraint firstItem="EWF-RS-tR3" firstAttribute="leading" secondItem="TpU-gO-2f1" secondAttribute="leadingMargin" constant="-5" id="e2z-OD-b2S"/>
                             <constraint firstItem="EWF-RS-tR3" firstAttribute="top" secondItem="uEw-UM-LJ8" secondAttribute="bottom" constant="25" id="gN1-ah-MxK"/>
+                            <constraint firstItem="ecy-YE-Fmk" firstAttribute="trailing" secondItem="TpU-gO-2f1" secondAttribute="trailingMargin" constant="15" id="hGm-Y1-gsi"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="cupLabel" destination="ecy-YE-Fmk" id="4py-fc-uKO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tc2-Qw-aMS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="305" y="433"/>
+            <point key="canvasLocation" x="304.80000000000001" y="432.23388305847078"/>
         </scene>
     </scenes>
 </document>

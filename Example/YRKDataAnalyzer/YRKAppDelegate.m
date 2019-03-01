@@ -19,7 +19,7 @@
     //YRKDARemoteConfig *config = [[YRKDARemoteConfig alloc] initWithDict:nil];
     
     YRKDataAnalyzer *analyzer = [YRKDataAnalyzer sharedInstance];
-    [analyzer startAnalyzerWithAppId:@"1" debugMode:YRKDataAnalyzerDebugOff userBlock:^NSString * _Nonnull{
+    [analyzer startAnalyzerWithAppId:@"1" debugMode:YRKDataAnalyzerDebugAndTrack userBlock:^NSString * _Nonnull{
         return @"user1";
     }];
     

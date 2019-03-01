@@ -55,6 +55,7 @@ static dispatch_queue_t __logQueue__ ;
     @try{
         va_list args;
         va_start(args, format);
+
         NSString *message = [[NSString alloc] initWithFormat:format arguments:args];
         [self.sharedInstance log:asynchronous message:message level:level file:file function:function line:line];
         va_end(args);
@@ -70,7 +71,7 @@ static dispatch_queue_t __logQueue__ ;
    function:(const char *)function
        line:(NSUInteger)line {
     @try{
-        NSString *logMessage = [[NSString alloc]initWithFormat:@"[SALog][%@]  %s [line %lu]    %s %@",[self descriptionForLevel:level],function,(unsigned long)line,[@"" UTF8String],message];
+        NSString *logMessage = [[NSString alloc]initWithFormat:@"[DALog][%@]  %s [line %lu]    %s %@",[self descriptionForLevel:level],function,(unsigned long)line,[@"" UTF8String],message];
         if ([YRKLog isLoggerEnabled]) {
             NSLog(@"%@",logMessage);
         }
