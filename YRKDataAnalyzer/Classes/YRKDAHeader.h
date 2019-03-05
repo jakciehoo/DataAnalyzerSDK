@@ -33,7 +33,7 @@ typedef NS_OPTIONS(NSInteger, YRKDataAnalyzerNetworkType) {
 
 /**
  * @abstract
- * Debug 模式，用于检验数据导入是否正确。该模式下，事件会逐条实时发送到 SensorsAnalytics，并根据返回值检查
+ * Debug 模式，用于检验数据导入是否正确。该模式下，事件会逐条实时发送，并根据返回值检查
  * 数据导入是否正确。
  *
  * @discussion
