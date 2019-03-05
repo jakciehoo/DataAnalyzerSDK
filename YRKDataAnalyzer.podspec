@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'YRKDataAnalyzer'
-  s.version          = '0.1.0'
+  s.version          = '1.0.0'
   s.summary          = 'A short description of YRKDataAnalyzer.'
 
 # This description is used to generate tags and improve search results.
@@ -25,7 +25,7 @@ TODO: Add long description of the pod here.
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { '胡江华' => 'hujianghua@yiruikecorp.com' }
-  s.source           = { :git => 'https://github.com/胡江华/YRKDataAnalyzer.git', :tag => s.version.to_s }
+  s.source           = { :git => 'http://10.35.33.29:9999/hujianghua/YRKDataAnalyzer_iOS.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
