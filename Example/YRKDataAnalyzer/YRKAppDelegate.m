@@ -17,10 +17,12 @@
     
     
     //YRKDARemoteConfig *config = [[YRKDARemoteConfig alloc] initWithDict:nil];
-    
+    self.userId = @"user1";
     YRKDataAnalyzer *analyzer = [YRKDataAnalyzer sharedInstance];
+    
+    __weak typeof(self) weakSelf = self;
     [analyzer startAnalyzerWithAppId:@"1" debugMode:YRKDataAnalyzerDebugAndTrack userBlock:^NSString * _Nonnull{
-        return @"user1";
+        return weakSelf.userId;
     }];
     
     return YES;

@@ -55,9 +55,17 @@
                                     <action selector="buttonConcurrent:" destination="whP-gf-Uak" eventType="touchUpInside" id="ikb-Jq-4RG"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oXn-3D-pHl">
+                                <rect key="frame" x="16" y="140" width="181" height="30"/>
+                                <state key="normal" title="模拟退出登录，userId清空"/>
+                                <connections>
+                                    <action selector="logout:" destination="whP-gf-Uak" eventType="touchUpInside" id="BS7-Uf-uFH"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="oXn-3D-pHl" firstAttribute="top" secondItem="6IY-VF-WhZ" secondAttribute="bottom" constant="21" id="7MA-NJ-2oD"/>
                             <constraint firstItem="Mvr-aV-6Um" firstAttribute="top" secondItem="ecy-YE-Fmk" secondAttribute="bottom" constant="15" id="7UD-tR-HXS"/>
                             <constraint firstItem="d0e-a6-8Rj" firstAttribute="leading" secondItem="6IY-VF-WhZ" secondAttribute="trailing" constant="39" id="EdQ-6q-3Z4"/>
                             <constraint firstItem="bRS-pn-lAc" firstAttribute="leading" secondItem="EWF-RS-tR3" secondAttribute="trailing" constant="41" id="HHr-hE-zN9"/>
@@ -70,6 +78,7 @@
                             <constraint firstItem="EWF-RS-tR3" firstAttribute="leading" secondItem="TpU-gO-2f1" secondAttribute="leadingMargin" constant="-5" id="e2z-OD-b2S"/>
                             <constraint firstItem="EWF-RS-tR3" firstAttribute="top" secondItem="uEw-UM-LJ8" secondAttribute="bottom" constant="25" id="gN1-ah-MxK"/>
                             <constraint firstItem="ecy-YE-Fmk" firstAttribute="trailing" secondItem="TpU-gO-2f1" secondAttribute="trailingMargin" constant="15" id="hGm-Y1-gsi"/>
+                            <constraint firstItem="oXn-3D-pHl" firstAttribute="leading" secondItem="TpU-gO-2f1" secondAttribute="leadingMargin" id="k7q-Fb-eTB"/>
                         </constraints>
                     </view>
                     <connections>

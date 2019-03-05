@@ -23,7 +23,7 @@
 #import "JSONUtil.h"
 #import "YRKEvent.h"
 
-#define DA_DEBUG 1
+#define DA_DEBUG 0
 #define VERSION @"1.0.0"
 #define DBNAME @"com.yiruikecorp.da.sqlite"
 #define TABLENAME @"da"
@@ -295,6 +295,7 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
     
     if (!self.sdkSwitch) {
         DALog(@"%@",@"DA SDK开关关闭");
+        return;
     }
     
     if (_serverURL == nil || [_serverURL isEqualToString:@""]) {
@@ -393,9 +394,6 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
 
 #pragma mark - 监听相关
 - (void)setUpListeners {
-    if (!self.sdkSwitch) {
-        DALog(@"%@",@"DA SDK开关关闭");
-    }
     
     // 监听 App 启动或结束事件
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];

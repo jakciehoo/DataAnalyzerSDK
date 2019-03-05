@@ -9,6 +9,7 @@
 #import "YRKViewController.h"
 #import <YRKDataAnalyzer/YRKDataAnalyzer.h>
 #import <YRKDataAnalyzer/DeviceInfoManager.h>
+#import "YRKAppDelegate.h"
 
 @interface YRKViewController ()
 
@@ -19,13 +20,13 @@
 
 @implementation YRKViewController
 - (IBAction)buton1:(UIButton *)sender {
-    [[YRKDataAnalyzer sharedInstance] track:@"test" withProperties:@{@"aa": @"bb"}];
+    [[YRKDataAnalyzer sharedInstance] track:@"homeprofile.like.click" withProperties:@{@"aa": @"bb"}];
 }
 
 - (IBAction)button100:(UIButton *)sender {
     
     for (int i = 0; i < 100; i++) {
-        [[YRKDataAnalyzer sharedInstance] track:@"test100" withProperties:@{@"aa": @"bb"}];
+        [[YRKDataAnalyzer sharedInstance] track:@"homecomment.cancle.click" withProperties:@{@"aa": @"bb"}];
     }
 }
 
@@ -33,18 +34,23 @@
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         for (int i = 0; i < 5000; i++) {
-            [[YRKDataAnalyzer sharedInstance] track:@"test50000" withProperties:@{@"aa": @"bb"}];
+            [[YRKDataAnalyzer sharedInstance] track:@"homecomment.cancle.click" withProperties:@{@"aa": @"bb"}];
         }
     });
 }
 - (IBAction)buttonConcurrent:(id)sender {
     for (int i = 0; i < 50000; i++) {
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            [[YRKDataAnalyzer sharedInstance] track:@"test50000" withProperties:@{@"aa": @"bb", @"index" : @(i)}];
+            [[YRKDataAnalyzer sharedInstance] track:@"homecomment.cancle.click" withProperties:@{@"aa": @"bb", @"index" : @(i)}];
             
         });
 
     }
+}
+- (IBAction)logout:(id)sender {
+    
+    YRKAppDelegate *delegate = (YRKAppDelegate *)[UIApplication sharedApplication].delegate;
+    delegate.userId = nil;
 }
 
 - (void)viewDidLoad
