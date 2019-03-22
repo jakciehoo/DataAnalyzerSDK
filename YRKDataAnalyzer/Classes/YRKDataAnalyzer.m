@@ -215,6 +215,9 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
         YRKEvent *eventObj = [[YRKEvent alloc] init];
         eventObj.event = event;
         eventObj.eventTime = @([@([NSDate date].timeIntervalSince1970 * 1000) integerValue]).stringValue;
+        eventObj.userId = self.userBlock() ?: @"";
+        eventObj.appVersion = [self appVersion] ?: @"";
+        
         if ([properties isKindOfClass:[NSDictionary class]]) {
             eventObj.extendInfo = properties.yy_modelToJSONString;
         }
@@ -350,8 +353,7 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
     
     NSMutableDictionary *data = [NSMutableDictionary dictionary];
     NSMutableDictionary *commonParam = [NSMutableDictionary dictionaryWithCapacity:1];
-    NSString *userId = self.userBlock();
-    [commonParam setValue:userId ?: @"" forKey:@"userId"];
+
     [commonParam addEntriesFromDictionary:[self commonParamDict]];
     [data setValue:commonParam forKey:@"commonInfo"];
     [data setValue:records forKey:@"eventInfoList"];
@@ -537,7 +539,7 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
     }
     
     // Use setValue semantics to avoid adding keys where value can be nil.
-    [p setValue:[self appVersion] forKey:@"appVersion"];
+    //[p setValue:[self appVersion] forKey:@"appVersion"];
     [p setValue:self.appId forKey:@"appId"];
     [p setValue:osVersion forKey:@"osVersion"];
     [p setValue:[self libVersion] forKey:@"sdkVersion"];
@@ -562,10 +564,10 @@ void *YRKDAQueueTag = &YRKDAQueueTag;
     NSString *network = [self getNetWorkState];
     [p setValue:network forKey:@"network"];
     
-    if (self.userBlock) {
-        NSString *userId = self.userBlock();
-        [p setValue:userId forKey:@"userId"];
-    }
+//    if (self.userBlock) {
+//        NSString *userId = self.userBlock();
+//        [p setValue:userId forKey:@"userId"];
+//    }
     
     [p setValue:@"AppStore" forKey:@"channelId"];
 
