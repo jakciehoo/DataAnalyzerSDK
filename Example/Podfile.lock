@@ -16,7 +16,7 @@ PODS:
     - FMDB
   - OpenUDID (1.0.0)
   - Specta (1.0.7)
-  - YRKDataAnalyzer (0.1.0):
+  - YRKDataAnalyzer (1.0.0):
     - JQFMDB (= 1.1.6)
     - OpenUDID (= 1.0.0)
     - YYModel (= 1.0.4)
@@ -52,7 +52,7 @@ SPEC CHECKSUMS:
   JQFMDB: 39ab0d6d7c26fd30e51c4dd92edcb27506a34c3a
   OpenUDID: e7cb6984c7304906ad20f3a36bf087b025896b6b
   Specta: 3e1bd89c3517421982dc4d1c992503e48bd5fe66
-  YRKDataAnalyzer: 83c48008338f4284b5b95541737e9e90a54d1f43
+  YRKDataAnalyzer: 51b1d802d3ee922d664afa9cb242acc61688300f
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
 PODFILE CHECKSUM: e47684ae7a9ba9d4ba09e26aa566e73149d26ef5

@@ -14,8 +14,6 @@
 #import "DeviceDataLibrery.h"
 #import "DeviceInfoManager.h"
 #import "NetWorkInfoManager.h"
-#import "JSONUtil.h"
-#import "YRKDataPersistencor.h"
 #import "YRKDAHeader.h"
 #import "YRKDARemoteConfig.h"
 #import "YRKDataAnalyzer.h"

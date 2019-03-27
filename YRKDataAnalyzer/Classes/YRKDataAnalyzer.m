@@ -20,11 +20,10 @@
 #import "DeviceInfoManager.h"
 #import "YRKReachability.h"
 #import "YRKNetworkHelper.h"
-#import "JSONUtil.h"
 #import "YRKEvent.h"
 
 #define DA_DEBUG 0
-#define VERSION @"1.0.0"
+#define VERSION @"1.0.1"
 #define DBNAME @"com.yiruikecorp.da.sqlite"
 #define TABLENAME @"da"
 
