@@ -21,7 +21,7 @@
     YRKDataAnalyzer *analyzer = [YRKDataAnalyzer sharedInstance];
     
     __weak typeof(self) weakSelf = self;
-    [analyzer startAnalyzerWithAppId:@"1" debugMode:YRKDataAnalyzerDebugAndTrack userBlock:^NSString * _Nonnull{
+    [analyzer startAnalyzerWithAppId:@"1" debugMode:YRKDataAnalyzerDebugOff userBlock:^NSString * _Nonnull{
         return weakSelf.userId;
     }];
     

@@ -23,12 +23,12 @@
 #import "YRKEvent.h"
 
 #define DA_DEBUG 0
-#define VERSION @"1.0.1"
+#define VERSION @"1.0.2"
 #define DBNAME @"com.yiruikecorp.da.sqlite"
 #define TABLENAME @"da"
 
 #define TEST_SERVER @"http://test.xiaoban.ren/data/report/api"
-#define ONLINE_SERVER @"http://api.xiaoban.ren/data/report/api"
+#define ONLINE_SERVER @"https://api-data.kajicam.com/data/report/api"
 
 
 
